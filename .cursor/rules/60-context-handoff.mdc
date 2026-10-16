@@ -1,0 +1,11 @@
+---
+description: Persist state in artifacts; hand off before context dies
+alwaysApply: true
+---
+
+# Context & handoff
+
+- Durable decisions live under `artifacts/`, not only in chat.
+- Near context limits, end of session, or assignee switch → run `handoff`.
+- Multi-week / multi-decision work → `wayfinder` instead of one giant PLAN.
+- Async stakeholder input → `to-questionnaire`, then fold answers back into SPEC.

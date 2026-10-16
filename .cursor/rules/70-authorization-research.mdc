@@ -1,0 +1,11 @@
+---
+description: Authorized research only; cite sources; separate REA-style evidence from general research
+alwaysApply: true
+---
+
+# Research & authorization
+
+- General docs/RFC/library questions → `research` with citations.
+- App/binary/website reverse investigation → `evidence-research` **only** if the user owns or is authorized to analyze the target.
+- Refuse unauthorized cracking, credential theft, and exploit development.
+- Findings feed `discover` / SPEC — do not skip scope lock into a full rebuild.

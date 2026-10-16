@@ -1,0 +1,14 @@
+---
+description: Evidence before claims — never assert pass/fixed/done without command output
+alwaysApply: true
+---
+
+# Verification before claims
+
+Before saying work is complete, fixed, or passing:
+
+1. Run the relevant commands (tests, lint, typecheck, build) yourself.
+2. Show exit codes and key output (or paths to log files).
+3. If checks fail, fix or document a waiver — do not redefine “done”.
+
+Preferred skill: `verify`, then `ship` for commit/PR.

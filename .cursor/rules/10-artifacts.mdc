@@ -1,0 +1,26 @@
+---
+description: Where specs, plans, tickets, reviews, handoffs, ADRs must live
+alwaysApply: true
+---
+
+# Artifacts
+
+Canonical paths (create dirs if missing):
+
+| Kind | Path |
+|------|------|
+| Research | `artifacts/research/<slug>.md` |
+| Spec | `artifacts/specs/<slug>.md` |
+| Plan | `artifacts/plans/<slug>.md` |
+| Wayfinder | `artifacts/plans/<slug>-wayfinder.md` |
+| Tickets | `artifacts/tickets/<slug>.md` |
+| Review | `artifacts/reviews/<slug>.md` |
+| Handoff | `artifacts/handoffs/<slug>.md` |
+| Teach | `artifacts/teach/<topic-slug>/` |
+| ADR | `docs/adr/NNNN-title.md` |
+
+Use templates in `templates/` when starting a new file.
+
+Slug = kebab-case, stable for the task (reuse across phases).
+
+When continuing prior work, **read** the existing artifacts before asking the user to restate requirements.

@@ -1,0 +1,34 @@
+---
+description: Core A→Z workflow discipline — grill before code, artifacts on disk, evidence before done
+alwaysApply: true
+---
+
+# Workflow (always)
+
+You are working under **cursor-workflow**. Read `AGENTS.md` for the full router and skill catalog.
+
+## Default pipeline
+
+`discover`/`grill-me` → `lock-scope` → `write-plan` → `risk-assess` → `to-tickets` → `implement`/`implement-spec` → `dual-review` → `verify` → `ship` → `retro`
+
+## Before writing production code
+
+1. Confirm intent via `discover` / `grill-me` (or user-explicit waiver / trivial fix).
+2. Have a scope lock and a plan or tickets under `artifacts/`.
+3. Prefer TDD (`tdd`) for behavior changes; `tidy-refactor` only when green.
+
+## During work
+
+- Keep terms aligned with `GLOSSARY.md` (`domain-modeling`).
+- Prefer small vertical slices; deep modules (`codebase-design`).
+- Do not claim tests pass / bug fixed / complete without `verify` evidence.
+- Context ending → `handoff`. Epics → `wayfinder`.
+
+## Parallelism
+
+- Isolated git worktrees only (`parallel-worktrees`). Never two writers on one working tree.
+
+## Out of scope for this kit
+
+- Do not invoke Kaopiz DevKit / `.vibe/` / `kaopiz-devkit` CLI.
+- Artifacts go under `artifacts/`, not `.vibe/`.

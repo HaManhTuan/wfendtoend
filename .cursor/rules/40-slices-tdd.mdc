@@ -1,0 +1,11 @@
+---
+description: Vertical slices, TDD for behavior, tidy-refactor only when green
+alwaysApply: true
+---
+
+# Slices & TDD
+
+- Behavior changes go through `tdd` (red → green → refactor).
+- One vertical slice at a time; no “boiling the ocean” PRs.
+- After green, prefer `tidy-refactor` before starting the next ticket’s new behavior.
+- Do not mix new features into a tidy/refactor pass.

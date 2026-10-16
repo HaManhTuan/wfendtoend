@@ -1,0 +1,11 @@
+---
+description: Prefer deep modules and seams; architecture work goes through improve-architecture + plan
+alwaysApply: true
+---
+
+# Architecture
+
+- Use `codebase-design` vocabulary: deep modules, seams, avoid utils dumping grounds.
+- Opportunistic deepening is fine inside the current slice; large redesigns use `improve-architecture` then plan/tickets.
+- Prefer incremental deepening over rewrites.
+- Align module/API names with `GLOSSARY.md`.

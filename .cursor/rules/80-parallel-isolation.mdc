@@ -1,0 +1,11 @@
+---
+description: Parallel agents only in isolated git worktrees; human merges
+alwaysApply: true
+---
+
+# Parallel isolation
+
+- Multiple agents or races → `parallel-worktrees` / `scripts/new-worktree.sh`.
+- Never two writers on one dirty working tree.
+- Prefer parallel only for independent tickets or intentional races.
+- Human (or lead session) merges; record winner in `artifacts/reviews/`.

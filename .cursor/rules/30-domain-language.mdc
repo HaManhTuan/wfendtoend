@@ -1,0 +1,11 @@
+---
+description: Prefer GLOSSARY terms; update glossary/ADRs when domain language shifts
+alwaysApply: true
+---
+
+# Domain language
+
+- Prefer terms from `GLOSSARY.md` in code, tickets, and explanations.
+- When coining or challenging a term, invoke `domain-modeling` (or update the glossary inline).
+- Hard product/tech decisions that won’t be obvious later → `docs/adr/NNNN-*.md`.
+- If the user says “wait what”, use `wait-what` and re-pitch with glossary words.
