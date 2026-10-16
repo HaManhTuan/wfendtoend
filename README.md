@@ -31,17 +31,40 @@ Side paths: `prototype`, `wayfinder`, `triage`, `improve-architecture`, `researc
 
 ### 1. Install this kit into your app repo
 
-```bash
-/var/www/ai-tools/cursor-workflow/scripts/install-to-project.sh /path/to/your-app
-```
-
-Or from this directory:
+The installer is **merge-safe by default**: it never overwrites your files. Conflicts are skipped and listed; use `--force` only when you intend to replace (automatic backup first).
 
 ```bash
+# From this kit (or a clone of HaManhTuan/wfendtoend)
 ./scripts/install-to-project.sh /path/to/your-app
+
+# Preview first
+./scripts/install-to-project.sh /path/to/your-app --dry-run
+
+# Minimal footprint — only .cursor/{rules,skills,commands}
+./scripts/install-to-project.sh /path/to/your-app --cursor-only
+
+# Replace conflicts (backs up to .wfendtoend-backup/<timestamp>/)
+./scripts/install-to-project.sh /path/to/your-app --force
+
+# Live-link new skills/rules/commands into the kit (power users)
+./scripts/install-to-project.sh /path/to/your-app --symlink
 ```
 
-Open **your-app** in Cursor (not only this kit repo). You should see `AGENTS.md`, `.cursor/skills/`, and `artifacts/`.
+| What gets installed | `--full` (default) | `--cursor-only` |
+|---------------------|--------------------|-----------------|
+| `.cursor/rules`, `skills`, `commands` | yes | yes |
+| `AGENTS.md` | yes if missing; if yours exists → kit saved as `docs/agents/AGENTS.wfendtoend.md` | same tip if `AGENTS.md` exists |
+| `GLOSSARY.md`, `artifacts/`, `templates/`, `docs/agents/` | yes | no (except agents tip/note) |
+| Manifest | `.cursor/wfendtoend-manifest.json` | same |
+
+**Conflict policy**
+
+- Same path, different content → **skip** (keep yours) unless `--force`
+- Identical content → no-op (`identical` in summary)
+- `--force` → copy yours into `.wfendtoend-backup/…`, then overwrite
+- Add `.wfendtoend-backup/` to the app `.gitignore`
+
+Open **your-app** in Cursor afterwards. Check `docs/agents/cursor-workflow-install.md` for the install report.
 
 ### 2. Add `find-skills` (recommended — once per machine)
 
