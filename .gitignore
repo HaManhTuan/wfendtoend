@@ -1,7 +1,9 @@
 artifacts/**
 !artifacts/**/
 !artifacts/**/.gitkeep
+!artifacts/**/*.md
 .scratch/**
 *.log
 .DS_Store
 node_modules/
+.wfendtoend-backup/

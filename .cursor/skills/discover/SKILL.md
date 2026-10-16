@@ -10,14 +10,33 @@ disable-model-invocation: true
 
 Misalignment is the #1 failure mode. Interview until the design tree is resolved, then write artifacts.
 
+## Entry
+
+1. Append a row via **`run-log`** (`Cursor command:` `/feature` or `/greenfield` when that started the work).
+2. Propose a kebab-case `<slug>` if missing.
+
 ## Rules
 
 - Ask **one** clarifying question per turn (unless the user pastes a full brief) — use `grilling`.
-- Record answers in `artifacts/research/<slug>.md` as you go.
+- Record **every** answer under a **Q&A log** in `artifacts/research/<slug>.md`.
 - Do **not** write production code.
 - When terms sprawl, invoke `domain-modeling`.
 - If the uncertainty is design-shaped, offer `prototype` before locking SPEC.
-- If chat already resolved everything, prefer `to-spec` instead of re-interviewing.
+- If chat already resolved everything, prefer `to-spec` (still require a Q&A or “Confirmed from chat” section with bullet facts).
+
+## Waiver (only path to skip grilling)
+
+User must say explicitly, e.g. `skip grill: use assumptions in research` **and** list what may be assumed.
+
+Then in research file:
+
+```markdown
+## Waiver
+- User: skip grill …
+- Assumptions accepted: …
+```
+
+Log the waiver in **`run-log`**. Silent assumption-filling is **forbidden**.
 
 ## Interview coverage
 
@@ -33,10 +52,11 @@ Cover until each branch is decided or explicitly deferred:
 
 ## Outputs (required)
 
-1. `artifacts/research/<slug>.md` — Q&A, sources, assumptions
+1. `artifacts/research/<slug>.md` — must include **Q&A log** _or_ **Waiver**
 2. `artifacts/specs/<slug>.md` — from `templates/SPEC.md`
+3. Run-log entries for discover start + SPEC ready
 
-Only after open questions are resolved (or accepted as assumptions), ask the user to approve the SPEC, then point them to `lock-scope`.
+Only after open questions are resolved (or waived), ask the user to approve the SPEC, then point them to `lock-scope`.
 
 ## Optional
 

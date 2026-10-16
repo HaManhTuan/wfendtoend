@@ -19,5 +19,14 @@
 
 ## Q&A log
 
+_(Required unless Waiver is filled. One Q per agent turn.)_
+
 ### Q1
 **A:**
+
+## Waiver
+
+_(Only if user explicitly said `skip grill: …`. Otherwise delete this section.)_
+
+- User text:
+- Assumptions accepted:

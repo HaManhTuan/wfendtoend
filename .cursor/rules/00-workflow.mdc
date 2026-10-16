@@ -1,5 +1,5 @@
 ---
-description: Core A→Z workflow discipline — grill before code, artifacts on disk, evidence before done
+description: Core A→Z workflow discipline — grill before code, slash trail, evidence before done
 alwaysApply: true
 ---
 
@@ -9,16 +9,20 @@ You are working under **cursor-workflow**. Read `AGENTS.md` for the full router 
 
 ## Default pipeline
 
-`discover`/`grill-me` → `lock-scope` → `write-plan` → `risk-assess` → `to-tickets` → `implement`/`implement-spec` → `dual-review` → `verify` → `ship` → `retro`
+`/feature` or `/greenfield`
+→ `discover`/`grill-me` → `lock-scope` → `write-plan` → `risk-assess` → `to-tickets`
+→ `implement`/`implement-spec` → `dual-review` → `verify` → `ship` → `retro`
 
 ## Before writing production code
 
-1. Confirm intent via `discover` / `grill-me` (or user-explicit waiver / trivial fix).
-2. Have a scope lock and a plan or tickets under `artifacts/`.
-3. Prefer TDD (`tdd`) for behavior changes; `tidy-refactor` only when green.
+1. Prefer a Cursor slash entry (`/feature`, `/greenfield`). Log it with `run-log`.
+2. Confirm intent via `discover` / `grill-me` with a **Q&A log** — or a user-typed `skip grill: …` waiver.
+3. Have a scope lock and a plan or tickets under `artifacts/`.
+4. Prefer TDD (`tdd`) for behavior changes; static FE may use build/smoke checks; `tidy-refactor` only when green.
 
 ## During work
 
+- Append **`run-log`** at each phase (slash + skill + outcome).
 - Keep terms aligned with `GLOSSARY.md` (`domain-modeling`).
 - Prefer small vertical slices; deep modules (`codebase-design`).
 - Do not claim tests pass / bug fixed / complete without `verify` evidence.
@@ -32,3 +36,4 @@ You are working under **cursor-workflow**. Read `AGENTS.md` for the full router 
 
 - Do not invoke Kaopiz DevKit / `.vibe/` / `kaopiz-devkit` CLI.
 - Artifacts go under `artifacts/`, not `.vibe/`.
+- Track `artifacts/**/*.md` in git (see kit `.gitignore` pattern).

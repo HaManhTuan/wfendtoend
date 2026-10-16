@@ -8,14 +8,15 @@ disable-model-invocation: true
 
 # Ask workflow
 
-Help the user pick **one** next skill. Do not start implementing.
+Help the user pick **one** next skill **and Cursor slash**. Do not start implementing.
 
 ## Steps
 
 1. Ask what they want (feature, bug, research, refactor, epic, teach, ship, harness).
 2. Map to `AGENTS.md` router table.
-3. Recommend the **single** next skill and the expected artifact path.
-4. Stop and wait for them to invoke it (or confirm you should run it).
+3. Recommend the **slash** first (e.g. `/feature`), then the skill chain and artifact paths.
+4. Remind them the agent must **grill** (or they must type `skip grill: …`) and append **`run-log`**.
+5. Stop and wait for them to invoke the slash (or confirm you should run it).
 
 ## Examples
 

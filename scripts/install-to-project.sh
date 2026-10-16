@@ -297,6 +297,26 @@ if [[ "$MODE" == "full" ]]; then
 
   place_file "$KIT_ROOT/docs/agents/issue-tracker.md" "$TARGET/docs/agents/issue-tracker.md" 0
   place_file "$KIT_ROOT/docs/agents/README.md" "$TARGET/docs/agents/README.md" 0
+
+  # Ensure app can commit workflow markdown + ignore installer backups
+  if [[ "$DRY_RUN" -eq 0 ]]; then
+    touch "$TARGET/.gitignore"
+    if ! grep -qF "# cursor-workflow / wfendtoend" "$TARGET/.gitignore" 2>/dev/null; then
+      {
+        echo ""
+        echo "# cursor-workflow / wfendtoend"
+        echo "artifacts/**"
+        echo "!artifacts/**/"
+        echo "!artifacts/**/.gitkeep"
+        echo "!artifacts/**/*.md"
+        echo ".wfendtoend-backup/"
+      } >> "$TARGET/.gitignore"
+      ADDED=$((ADDED + 1))
+      ADDED_LIST+=(".gitignore (wfendtoend artifact patterns)")
+    fi
+  else
+    echo "  note    .gitignore  (would append artifact *.md track + .wfendtoend-backup/)"
+  fi
 else
   ensure_dir "$TARGET/docs/agents"
   if [[ ! -f "$TARGET/AGENTS.md" ]]; then
@@ -428,6 +448,6 @@ if [[ "$DRY_RUN" -eq 1 ]]; then
   echo "Dry-run complete — no files written."
 else
   echo "Done. Manifest: .cursor/wfendtoend-manifest.json"
-  echo "Open the app in Cursor → /ask or /feature"
+  echo "Open the app in Cursor → type /greenfield or /feature (agent will grill first)."
 fi
 echo

@@ -12,13 +12,14 @@ disable-model-invocation: true
 
 - `verify` passed (or waiver documented)
 - User explicitly asked to commit and/or open a PR
+- Run log includes discover (or waiver) — otherwise refuse “A→Z complete”
 
 ## Commit
 
 Follow the user’s git safety rules:
 
 1. `git status` / `git diff` / recent `git log` style
-2. Stage relevant files (no secrets)
+2. Stage relevant files (no secrets) — **include** `artifacts/**/*.md`
 3. Commit with a concise why-focused message (HEREDOC)
 4. Re-check `git status`
 
@@ -30,4 +31,6 @@ Follow the **`pr`** skill for body shape (summary, evidence, merge danger, test 
 
 ## After ship
 
-Suggest `retro` if the session hit harness friction. Suggest `handoff` if work continues in another session.
+1. Append **`run-log`** for ship.
+2. Placeholder checklist (FE / content sites): remind owner to replace sample emails, lorem bio, fake prices before public launch — offer `wizard` if cutover steps are human-only.
+3. Suggest `retro` if the session hit harness friction. Suggest `handoff` if work continues elsewhere.

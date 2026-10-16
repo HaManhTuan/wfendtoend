@@ -1,237 +1,231 @@
-# cursor-workflow
+# cursor-workflow (wfendtoend)
 
-Independent A→Z software workflow for **Cursor** (and other coding agents).
+Bộ quy trình A→Z cho **Cursor Agent**: từ ý tưởng → phỏng vấn → SPEC → plan → ticket → code → review → verify → commit.
 
-Inspired by [mattpocock/skills](https://github.com/mattpocock/skills), [stablyai/orca](https://github.com/stablyai/orca), and [morluto/rea](https://github.com/morluto/rea) — rewritten as a self-contained kit with **no Kaopiz DevKit / `.vibe` dependency**.
-
-## What you get
-
-| Layer | Path | Role |
-|-------|------|------|
-| Router | `AGENTS.md` | Which skill to use when |
-| Rules | `.cursor/rules/` | Always-on discipline |
-| Skills | `.cursor/skills/` | Full catalog (see `AGENTS.md`) |
-| Commands | `.cursor/commands/` | Slash entry points |
-| Artifacts | `artifacts/` | Spec / plan / tickets / evidence |
-| Domain | `GLOSSARY.md` + `docs/adr/` | Shared language |
-
-## Pipeline
-
-```
-setup → discover/grill → lock-scope → write-plan → risk-assess → to-tickets
-  → implement | implement-spec  (+ tdd, tidy-refactor)
-  → dual-review → verify → ship (pr) → retro
-```
-
-Side paths: `prototype`, `wayfinder`, `triage`, `improve-architecture`, `research`, `evidence-research`, `parallel-worktrees`, `handoff`, `wizard`, `teach`, …
+Repo: [HaManhTuan/wfendtoend](https://github.com/HaManhTuan/wfendtoend)
 
 ---
 
-## Setup guide (do this in order)
+## Bạn cần làm gì? (tóm tắt)
 
-### 1. Install this kit into your app repo
+1. **Cài kit** vào folder dự án (một lần / repo).
+2. **Mở dự án trong Cursor.**
+3. Gõ slash **`/greenfield`** (app mới) hoặc **`/feature`** (tính năng mới).
+4. **Trả lời từng câu hỏi** của agent (grill) — đừng bảo “code luôn” nếu chưa approve SPEC.
+5. Khi agent hỏi approve SPEC / plan → đọc file trong `artifacts/` rồi ok.
+6. Bảo agent **implement** → xem `npm test` / `npm run build` (verify).
+7. Bảo **commit** khi hài lòng (`ship`).
 
-The installer is **merge-safe by default**: it never overwrites your files. Conflicts are skipped and listed; use `--force` only when you intend to replace (automatic backup first).
+Agent **phải** ghi nhật ký tại `artifacts/reviews/<slug>-run-log.md` (slash + skill từng bước).
+
+---
+
+## Ví dụ: ý tưởng “website bán hàng”
+
+Giả sử bạn muốn làm **shop MVP** (catalog + giỏ + checkout giả lập).
+
+### Bước 0 — Tạo folder dự án
 
 ```bash
-# From this kit (or a clone of HaManhTuan/wfendtoend)
-./scripts/install-to-project.sh /path/to/your-app
-
-# Preview first
-./scripts/install-to-project.sh /path/to/your-app --dry-run
-
-# Minimal footprint — only .cursor/{rules,skills,commands}
-./scripts/install-to-project.sh /path/to/your-app --cursor-only
-
-# Replace conflicts (backs up to .wfendtoend-backup/<timestamp>/)
-./scripts/install-to-project.sh /path/to/your-app --force
-
-# Live-link new skills/rules/commands into the kit (power users)
-./scripts/install-to-project.sh /path/to/your-app --symlink
+mkdir -p /path/to/my-shop && cd /path/to/my-shop
+git init -b main
 ```
 
-| What gets installed | `--full` (default) | `--cursor-only` |
-|---------------------|--------------------|-----------------|
-| `.cursor/rules`, `skills`, `commands` | yes | yes |
-| `AGENTS.md` | yes if missing; if yours exists → kit saved as `docs/agents/AGENTS.wfendtoend.md` | same tip if `AGENTS.md` exists |
-| `GLOSSARY.md`, `artifacts/`, `templates/`, `docs/agents/` | yes | no (except agents tip/note) |
-| Manifest | `.cursor/wfendtoend-manifest.json` | same |
+### Bước 1 — Cài workflow vào repo đó
 
-**Conflict policy**
+Clone kit (hoặc dùng bản local), rồi:
 
-- Same path, different content → **skip** (keep yours) unless `--force`
-- Identical content → no-op (`identical` in summary)
-- `--force` → copy yours into `.wfendtoend-backup/…`, then overwrite
-- Add `.wfendtoend-backup/` to the app `.gitignore`
+```bash
+# Nếu đã clone wfendtoend:
+./scripts/install-to-project.sh /path/to/my-shop
 
-Open **your-app** in Cursor afterwards. Check `docs/agents/cursor-workflow-install.md` for the install report.
+# Xem trước (không ghi file):
+./scripts/install-to-project.sh /path/to/my-shop --dry-run
 
-### 2. Add `find-skills` (recommended — once per machine)
+# Chỉ lấy .cursor (repo đã có AGENTS.md riêng):
+./scripts/install-to-project.sh /path/to/my-shop --cursor-only
+```
 
-This is a **meta-skill** from Vercel: when you ask “is there a skill for X?”, the agent can search [skills.sh](https://www.skills.sh/) and suggest installs.
+Installer **không đè** file của bạn mặc định. Conflict → skip; muốn thay thì `--force` (có backup `.wfendtoend-backup/`).
 
-Install at **user / global** level (all projects), **not** into this kit’s core:
+Sau install, mở **`/path/to/my-shop`** trong Cursor (không mở nhầm folder kit).
+
+### Bước 2 — (Khuyến nghị) skill hỗ trợ tìm thêm & FE
+
+Chạy **một lần trên máy** (user/global), không nhét vào core kit:
 
 ```bash
 npx skills add https://github.com/vercel-labs/skills --skill find-skills
 ```
 
-If the CLI offers a global / user scope flag, prefer that (e.g. `-g`) so every repo can use it.
-
-**How to use**
-
-- In Cursor chat: *“find a skill for React performance”* or *“is there a skill for PR reviews?”*
-- Or yourself in a terminal:
+Shop là FE/UI → thêm:
 
 ```bash
-npx skills find react performance
-npx skills find pr review
-```
+npx skills add anthropics/skills --skill frontend-design
 
-Browse the leaderboard first: [https://www.skills.sh/](https://www.skills.sh/). Prefer high install counts and known owners (`vercel-labs`, `anthropics`, `mattpocock`, …).
-
-**Rule of thumb:** anything you install this way is **stack / tool layer** for that machine or that app. Do **not** copy random skills into `cursor-workflow` core.
-
-### 3. Optional — browser automation (web / UI projects only)
-
-For click/fill/screenshot/QA in a real browser, add [agent-browser](https://www.skills.sh/vercel-labs/agent-browser/agent-browser) **on the app repo** (or user-global if you always do UI work):
-
-```bash
+# Optional — smoke test trong browser sau này
 npm i -g agent-browser && agent-browser install
 npx skills add https://github.com/vercel-labs/agent-browser --skill agent-browser
 ```
 
-Before browser work, the agent should load:
+### Bước 3 — Bắt đầu trong Cursor (slash)
 
-```bash
-agent-browser skills get core
-# or full reference:
-agent-browser skills get core --full
+Trong chat Agent, gõ:
+
+```text
+/greenfield
 ```
 
-Use it from `prototype`, `verify` (UI smoke), or `diagnose` (repro in the browser). Skip this step for pure API/backend repos.
+Rồi mô tả ngắn, ví dụ:
 
-### 4. Optional — frontend design skills (FE / UI apps only)
-
-These are **stack-layer** skills. Install on the **app repo** (or user-global if every project is UI). Do **not** copy them into `cursor-workflow` core.
-
-They plug into existing phases: `prototype` → design direction → `/feature` implement → `verify` / `agent-browser` for visual check.
-
-#### Pick by goal
-
-| Goal | Install | Notes |
-|------|---------|--------|
-| Most popular (skills.sh installs) | [anthropics/skills@frontend-design](https://www.skills.sh/anthropics/skills/frontend-design) | ~993K installs; repo [anthropics/skills](https://github.com/anthropics/skills) ~181K★ — aesthetic direction, avoid generic AI UI |
-| Strong “taste” + browser check | [leonxlnx/taste-skill@design-taste-frontend](https://www.skills.sh/leonxlnx/taste-skill/design-taste-frontend) | ~619K installs; repo ~98K★ |
-| High stars, multi-platform UX | [nextlevelbuilder/ui-ux-pro-max-skill](https://www.skills.sh/nextlevelbuilder/ui-ux-pro-max-skill/ui-ux-pro-max) | ~398K installs; repo ~136K★ |
-| Vercel web guidelines | [vercel-labs/agent-skills@web-design-guidelines](https://www.skills.sh/vercel-labs/agent-skills/web-design-guidelines) | ~742K installs |
-| Wireframe → you pick → build (designer flow) | [evondev/evondevKit](https://github.com/evondev/evondevKit) (`ui-ux`) | Fewer installs/★; brief + 2–3 wireframes + uses your components |
-| Design language for agents | [pbakaus/impeccable@frontend-design](https://www.skills.sh/pbakaus/impeccable/frontend-design) | ~53K installs; repo ~82K★ |
-
-`prototype` in this kit already covers throwaway UI probes — you do **not** need Matt’s separate `prototype` skill.
-
-#### Commands (run in the app repo)
-
-```bash
-# Default recommendation — most installed FE design skill
-npx skills add anthropics/skills --skill frontend-design
-
-# Taste / non-generic AI look
-npx skills add leonxlnx/taste-skill --skill design-taste-frontend
-
-# Broader UI/UX intelligence
-npx skills add nextlevelbuilder/ui-ux-pro-max-skill --skill ui-ux-pro-max
-
-# Vercel guidelines
-npx skills add vercel-labs/agent-skills --skill web-design-guidelines
-
-# Wireframe gate (evondev-style)
-npx skills add evondev/evondevKit -a cursor
-# then in Cursor: /ui-ux Build an orders list…
+```text
+Làm website bán hàng MVP: catalog sản phẩm, giỏ hàng, trang checkout giả lập.
+Chưa cần thanh toán thật / admin CMS.
 ```
 
-#### Suggested combo for a serious FE app
+**Agent sẽ:**
 
-```bash
-npx skills add anthropics/skills --skill frontend-design
-npx skills add leonxlnx/taste-skill --skill design-taste-frontend   # optional second taste layer
-# plus step 3 (agent-browser) for visual verify
-# plus evondevKit only if you want mandatory wireframe approval
+| Thứ tự | Việc agent làm | Slash / skill | File bạn mở để xem |
+|--------|----------------|---------------|--------------------|
+| 1 | Ghi run-log | `run-log` | `artifacts/reviews/shop-mvp-run-log.md` |
+| 2 | **Phỏng vấn** (1 câu / lượt) | `discover` / `grilling` | `artifacts/research/shop-mvp.md` |
+| 3 | Viết SPEC → bạn approve | `discover` | `artifacts/specs/shop-mvp.md` |
+| 4 | Khoá scope | `lock-scope` | `…-scope.md` hoặc section trong SPEC |
+| 5 | Plan + rủi ro | `write-plan`, `risk-assess` | `artifacts/plans/…` |
+| 6 | Cắt ticket | `to-tickets` | `artifacts/tickets/…` |
+| 7 | Bạn nói “làm đi” | `implement` + `tdd` | code trong repo |
+| 8 | Review 2 trục | `dual-review` | `artifacts/reviews/…` |
+| 9 | Chạy check | `verify` | `artifacts/reviews/…-verify.md` |
+| 10 | Bạn nói “commit” | `ship` | git commit |
+
+### Bước 4 — Bạn trả lời grill (bắt buộc)
+
+Agent hỏi từng câu, ví dụ:
+
+- Bán gì? (thời trang / đồ ăn / digital…)
+- Ai là khách?
+- Checkout giả lập thế nào là đủ?
+- Stack? (Next / Laravel + Blade / …)
+- Có tài khoản đăng nhập không?
+
+Gõ câu trả lời bình thường.  
+Muốn bỏ phỏng vấn (không khuyến nghị): phải gõ rõ:
+
+```text
+skip grill: dùng assumptions trong research — MVP chỉ catalog + cart localStorage, không auth
 ```
 
-Re-check popularity anytime:
+Không có câu đó → agent **không được** tự bịa assumption rồi code.
 
-```bash
-npx skills find frontend design
-npx skills find ui-ux
+### Bước 5 — Approve rồi mới code
+
+Khi có SPEC/plan/tickets, bạn gõ kiểu:
+
+```text
+SPEC ok. Plan ok. Implement T1.
 ```
 
-### 5. Optional — stack overlays (per language / framework)
+Hoặc:
 
-Core skills stay language-agnostic. Per project, add:
+```text
+Làm hết các ticket ready frontier.
+```
 
-- `.cursor/rules/90-<stack>.mdc` — conventions, test/lint commands
-- `.cursor/skills/stack.<name>/` — how to write tests, folder layout, etc.
+### Bước 6 — Xem / chạy app (tuỳ stack)
 
-Discover stack skills via `find-skills` / `npx skills find laravel` (or react, go, …), then install into **that app**, not into this kit.
+Ví dụ frontend:
 
-### 6. What not to install into core
+```bash
+npm install
+npm run dev
+npm run build
+```
 
-| Skill | Why skip for core |
-|-------|-------------------|
-| `mattpocock/skills` → `grill-with-docs` | Already covered by `grilling` + `domain-modeling` here — adding it duplicates the router |
-| FE design skills above | App / user scope only — keep this kit process-only |
-| Random one-off skills | Keep them in the **app** or **user** scope; keep this kit the A→Z process only |
+### Bước 7 — Ship
+
+```text
+Commit giúp với message rõ ràng. Đừng push.
+```
 
 ---
 
-## Use in Cursor
+## Cheat sheet — Cursor slash
 
-| Intent | Slash / action |
-|--------|----------------|
-| Feature | `/feature` |
-| Bug | `/bug` |
-| Greenfield | `/greenfield` |
-| Router (in-kit) | `/ask` |
-| Find external skills | ask the agent / `npx skills find …` (needs step 2) |
-| Handoff | `/handoff` |
-| Triage | `/triage` |
-| Epic map | `/wayfinder` |
-| Architecture survey | `/architecture` |
-| Prototype | `/prototype` |
-| Teach | `/teach` |
+| Gõ trong Cursor | Khi nào |
+|-----------------|---------|
+| `/ask` | Không biết bắt đầu đâu |
+| `/greenfield` | App / sản phẩm mới |
+| `/feature` | Tính năng mới trên repo đã có |
+| `/bug` | Bug / regression |
+| `/handoff` | Hết context / giao agent khác |
+| `/triage` | Dọn inbox issue |
+| `/wayfinder` | Epic nhiều session |
+| `/architecture` | Rà soát kiến trúc |
+| `/prototype` | Thử UI/logic trước khi lock SPEC |
+| `/teach` | Học, không ship product |
 
-## Layers at a glance
+## Cheat sheet — shell (kit)
 
-```text
-┌─────────────────────────────────────────┐
-│  User global (optional)                 │
-│  find-skills, agent-browser,            │
-│  frontend-design / taste-skill          │
-├─────────────────────────────────────────┤
-│  App repo                               │
-│  cursor-workflow core (this kit)        │
-│  + stack rules/skills                   │
-│  + FE design / ui-ux (step 4)           │
-│  + optional agent-browser, evondevKit   │
-└─────────────────────────────────────────┘
+```bash
+# Cài vào app
+./scripts/install-to-project.sh /path/to/app
+./scripts/install-to-project.sh /path/to/app --dry-run
+./scripts/install-to-project.sh /path/to/app --cursor-only
+./scripts/install-to-project.sh /path/to/app --force
+
+# Worktree song song (Orca-lite)
+./scripts/new-worktree.sh api-impl
 ```
 
-- **`ask-workflow` / `/ask`** → which skill **inside this kit**
-- **`find-skills`** → which skill **on skills.sh** to install next
-- **FE design skills (step 4)** → how UI should look; still follow discover → plan → implement
+## File quan trọng sau khi cài
 
-## Design principles
+| Path | Việc của nó |
+|------|-------------|
+| `AGENTS.md` | Router skill |
+| `.cursor/skills/` | Playbook từng phase |
+| `.cursor/commands/` | Slash `/feature`… |
+| `artifacts/` | SPEC, plan, tickets, **run-log** (commit `*.md`) |
+| `GLOSSARY.md` | Ngôn ngữ chung |
+| `docs/agents/issue-tracker.md` | Tracker / label |
 
-1. Grill before code  
-2. Artifacts over chat memory  
-3. TDD as the execute loop  
-4. Two-axis review (Standards ‖ Spec)  
-5. Evidence before “done”  
-6. Parallel only with worktree isolation  
-7. Glossary + ADRs for shared language  
-8. Core process stays language-agnostic; stack is an overlay  
+## Pipeline (nhớ một hình)
+
+```text
+/greenfield hoặc /feature
+  → discover (grill + Q&A) → lock-scope → write-plan → risk-assess → to-tickets
+  → implement (+ tdd) → dual-review → verify → ship → retro
+```
+
+## Nguyên tắc cứng
+
+1. **Grill trước code** (hoặc `skip grill:` có chữ ký user).  
+2. **Slash + run-log** = dấu vết cho người đọc sau.  
+3. **Artifacts trên git** (`artifacts/**/*.md`).  
+4. **Verify có exit code** trước khi nói xong.  
+5. **Static FE** có thể verify bằng build/smoke, không ép Jest giả.
+
+## FE design skills (stack — không nằm trong core)
+
+Xem bảng chọn + lệnh cài trong mục “Optional — frontend design” trước đây; tóm tắt:
+
+```bash
+npx skills add anthropics/skills --skill frontend-design
+npx skills add leonxlnx/taste-skill --skill design-taste-frontend   # optional
+npx skills add evondev/evondevKit -a cursor                         # wireframe gate
+```
+
+Dùng trên **repo app**, không copy vào core kit này.
+
+## Install nâng cao
+
+| Flag | Nghĩa |
+|------|--------|
+| _(mặc định)_ `--full` | `.cursor` + AGENTS + glossary + artifacts + templates |
+| `--cursor-only` | Chỉ rules/skills/commands |
+| `--dry-run` | In plan, không ghi |
+| `--force` | Ghi đè conflict (backup trước) |
+| `--symlink` | Symlink skill mới về kit |
 
 ## License
 
-MIT — see `ATTRIBUTION.md` for upstream inspiration.
+MIT — xem `ATTRIBUTION.md`.

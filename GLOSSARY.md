@@ -21,6 +21,8 @@ Shared language for humans and agents. Prefer these terms in code, tickets, and 
 | **Evidence** | Command output / test result proving a claim | “should work” |
 | **Worktree race** | Parallel agents, isolated checkouts, pick winner | shared dirty tree |
 | **Handoff** | Compact artifact for the next agent/session | “continue somehow” |
+| **Run log** | Append-only audit of slash + skill + outcome | invisible freestyle chat |
+| **Skip-grill waiver** | User-typed `skip grill: …` recorded in research | silent assumptions |
 | **ADR** | Architecture Decision Record | tribal memory only |
 | **Retro** | Improve agent harness after a session | ignore friction |
 | **Tidy** | Refactor while green; no new behavior | drive-by rewrite |

@@ -1,46 +1,49 @@
 # AGENTS.md — cursor-workflow router
 
-Read this first. Pick **one** user-invoked skill, then follow it. Do not invent a parallel process.
+Read this first. Prefer a **Cursor slash** (`/feature`, `/greenfield`, `/bug`, `/ask`) as the human-visible entry, then follow **one** skill. Log phases with `run-log`.
 
 ## Quick router
 
 | Situation | Invoke |
 |-----------|--------|
-| Unsure which skill | `ask-workflow` |
-| First time in a repo | `setup-project` |
-| Vague idea / need interview | `grill-me` or `discover` |
+| Unsure which skill | `/ask` → `ask-workflow` |
+| First time in a repo | `setup-project` (then `/feature` or `/greenfield`) |
+| New feature / behavior change | **`/feature`** → discover → … → implement |
+| Greenfield product | **`/greenfield`** |
+| Bug / regression | **`/bug`** → `diagnose` → `tdd` → `verify` |
+| Vague idea / need interview only | `grill-me` or `discover` |
 | Conversation already enough → formal SPEC | `to-spec` |
-| New feature / behavior change | `discover` → `lock-scope` → `write-plan` (+ `risk-assess`) → `to-tickets` → `implement` |
 | Full SPEC, many tickets | `implement-spec` |
-| Greenfield product | slash `/greenfield` |
 | Design uncertainty (UI/logic) | `prototype` then back to discover/scope |
-| Epic / multi-session unknowns | `wayfinder` |
-| Bug / regression | `diagnose` → `tdd` → `verify` |
-| Inbox of issues | `triage` |
+| Epic / multi-session unknowns | `/wayfinder` → `wayfinder` |
+| Inbox of issues | `/triage` → `triage` |
 | Domain jargon drifting | `domain-modeling` |
 | Docs/RFC/library question | `research` |
 | Authorized app/binary/web investigation | `evidence-research` |
-| Architecture deepening survey | `improve-architecture` |
+| Architecture deepening survey | `/architecture` → `improve-architecture` |
 | Split / race agents | `parallel-worktrees` |
 | Diff ready for critique | `dual-review` |
 | Human-only infra/credentials steps | `wizard` |
 | Confused by last message | `wait-what` |
 | Need stakeholder answers async | `to-questionnaire` |
-| Teaching (not shipping) | `teach` |
-| Context ending / switch agent | `handoff` |
+| Teaching (not shipping) | `/teach` → `teach` |
+| Context ending / switch agent | `/handoff` → `handoff` |
 | About to say done | `verify` → `ship` (uses `pr`) |
 | Authoring skills/rules | `writing-for-agents` |
 | Session ended; improve harness | `retro` |
+| Audit trail row | `run-log` |
 
 ## Iron laws
 
-1. **No production code before discover/grill + lock-scope** (unless user says “skip grill” or it is a one-line typo fix).
-2. **No “fixed/done” without verify evidence** (commands run, exit codes shown).
-3. **One vertical slice at a time**; tidy only when green (`tidy-refactor`).
-4. **Update `GLOSSARY.md`** when a domain term is coined or challenged (`domain-modeling`).
-5. **Artifacts live under `artifacts/`** — never only in chat; hand off with `handoff`.
-6. **Parallel agents only in isolated worktrees**.
-7. **Authorized targets only** for `evidence-research`.
+1. **No production code before discover/grill + lock-scope** — unless user types `skip grill: …` (written waiver) or it is a one-line typo fix.
+2. **No silent assumptions** — research needs a **Q&A log** or **Waiver** section.
+3. **No “fixed/done” without verify evidence** (commands run, exit codes shown).
+4. **One vertical slice at a time**; tidy only when green (`tidy-refactor`).
+5. **Update `GLOSSARY.md`** when a domain term is coined or challenged (`domain-modeling`).
+6. **Artifacts under `artifacts/`** — commit `*.md` there; hand off with `handoff`.
+7. **Log the slash + skill** in `artifacts/reviews/<slug>-run-log.md` (`run-log`).
+8. **Parallel agents only in isolated worktrees**.
+9. **Authorized targets only** for `evidence-research`.
 
 ## Artifact map
 
@@ -54,12 +57,14 @@ Read this first. Pick **one** user-invoked skill, then follow it. Do not invent 
 | Wayfinder | `artifacts/plans/<slug>-wayfinder.md` |
 | Tickets | `artifacts/tickets/<slug>.md` |
 | Review | `artifacts/reviews/<slug>.md` |
+| Run log | `artifacts/reviews/<slug>-run-log.md` |
+| Verify | `artifacts/reviews/<slug>-verify.md` |
 | Handoff | `artifacts/handoffs/<slug>.md` |
 | Questionnaire | `artifacts/research/<slug>-questionnaire.md` |
 | Teach | `artifacts/teach/<topic-slug>/` |
 | ADR | `docs/adr/NNNN-title.md` |
 
-`<slug>` = short kebab-case task name (e.g. `auth-refresh`).
+`<slug>` = short kebab-case task name (e.g. `shop-mvp`).
 
 ## Skill catalog
 
@@ -96,11 +101,12 @@ Read this first. Pick **one** user-invoked skill, then follow it. Do not invent 
 
 | Skill | Role |
 |-------|------|
+| `run-log` | Append slash/skill audit rows |
 | `grilling` | Interview primitive |
 | `domain-modeling` | Glossary + ADRs |
 | `codebase-design` | Deep module vocabulary |
 | `risk-assess` | Plan risks |
-| `tdd` | Red-green-refactor |
+| `tdd` | Red-green-refactor (or build/smoke for static FE) |
 | `tidy-refactor` | Cleanup while green |
 | `diagnose` | Root-cause before fix |
 | `research` | Cited primary-source research |
@@ -108,15 +114,15 @@ Read this first. Pick **one** user-invoked skill, then follow it. Do not invent 
 | `verify` | Run checks + evidence |
 | `pr` | PR body shape |
 
-**Invocation rule:** User-invoked may call model-invoked. User-invoked must **not** call other user-invoked unless this router says so (e.g. `implement-spec` → `implement` / `parallel-worktrees`; `discover` → `grilling` / `domain-modeling`; `ship` → `pr`).
+**Invocation rule:** User-invoked may call model-invoked. User-invoked must **not** call other user-invoked unless this router says so (e.g. `implement-spec` → `implement` / `parallel-worktrees`; `discover` → `grilling` / `domain-modeling` / `run-log`; `ship` → `pr`).
 
 ## Default feature pipeline
 
 ```text
-discover (or grill-me → to-spec)
-  → lock-scope → write-plan → risk-assess → to-tickets
-  → implement | implement-spec   (+ tdd, tidy-refactor)
-  → dual-review → verify → ship → retro
+/feature or /greenfield
+ → discover (grill + run-log) → lock-scope → write-plan → risk-assess → to-tickets
+ → implement | implement-spec   (+ tdd, tidy-refactor)
+ → dual-review → verify → ship → retro
 ```
 
 ## Parallel agents (Orca-lite)
