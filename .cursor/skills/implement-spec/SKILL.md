@@ -22,7 +22,7 @@ For a full SPEC with a ticket graph — not a single tiny ticket.
    - Serial: run `implement` + `tdd` (+ `tidy-refactor`)
    - Parallel-safe: `parallel-worktrees` then merge winners into integration
 4. Recompute frontier until all tickets done or blocked.
-5. Close with `dual-review` → `verify` → optional `ship`.
+5. Close with `dual-review` → `verify` on the integration branch → optional `ship`. `release` only if the user asks. Worktree verify does not replace integration verify.
 
 ## Rules
 

@@ -35,4 +35,6 @@ Help the user pick **one** next skill **and Cursor slash**. Do not start impleme
 | Copy how an app works (authorized) | `evidence-research` |
 | Confused | `wait-what` |
 | End of day | `handoff` |
+| Commit or open a PR | `ship` |
+| Deploy, publish, or hand a build to users | `/release` → `release` |
 | Writing a new skill | `writing-for-agents` |

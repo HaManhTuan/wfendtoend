@@ -20,6 +20,7 @@ T3 → T4
 
 ### T1 — <title>
 
+- **Kind:** behavior | migration | contract | observability | chore
 - **Goal:**
 - **Done when:**
 - **Files:**

@@ -19,6 +19,10 @@
 
 ## Constraints
 
+## Sensitive surface
+
+none | auth | PII | payment | upload | multi-tenant | public API
+
 ## In scope
 
 ## Out of scope

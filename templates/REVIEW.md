@@ -18,7 +18,7 @@
 
 ## Verdict
 
-- [ ] Ready to ship
+- [ ] Ready to ship (git only — release is separate)
 - [ ] Needs fixes (list blockers)
 
 ## Notes

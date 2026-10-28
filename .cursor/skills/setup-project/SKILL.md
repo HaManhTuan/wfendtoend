@@ -54,4 +54,4 @@ npx skills add anthropics/skills --skill frontend-design
 
 ## Done when
 
-User can type **`/feature`** or **`/greenfield`** and the agent finds skills + will grill before coding.
+User can type **`/feature`** or **`/greenfield`** and the agent finds skills + will grill before coding. **`ship`** is git. **`/release`** is how an audience receives the build.

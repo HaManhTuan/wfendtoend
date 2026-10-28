@@ -15,6 +15,7 @@ Read `artifacts/plans/<slug>.md`. Write `artifacts/tickets/<slug>.md` from `temp
 Each ticket:
 
 - **ID** — `T1`, `T2`, …
+- **Kind** — `behavior` | `migration` | `contract` | `observability` | `chore`
 - **Title** — verb + outcome
 - **Goal** — one paragraph
 - **Done when** — testable acceptance
@@ -26,6 +27,8 @@ Each ticket:
 
 - Prefer **tracer bullets**: end-to-end thin slices over horizontal layers alone.
 - Keep tickets small enough for one focused session.
+- When schema or a public API changes, add `migration` and/or `contract` tickets and block behavior on them.
+- A critical path that can fail in production gets an `observability` ticket (health, or one log/metric) unless the user waives it.
 - Mark the **ready frontier** (no blockers) for `implement` / `parallel-worktrees`.
 
 ## Optional publish

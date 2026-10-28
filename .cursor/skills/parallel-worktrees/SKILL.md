@@ -40,7 +40,8 @@ Paste the **same SPEC excerpt + ticket** into each. Point each agent at this kit
 1. Diff each branch vs base.
 2. Run verify in each worktree.
 3. Human (or lead agent) picks winner / cherry-picks.
-4. Delete losing worktrees: `git worktree remove …`
+4. Run **integration verify** on the merged tree. A green worktree is not enough.
+5. Delete losing worktrees: `git worktree remove …`
 
 ## Rules
 

@@ -29,6 +29,7 @@ Read this first. Prefer a **Cursor slash** (`/feature`, `/greenfield`, `/bug`, `
 | Teaching (not shipping) | `/teach` → `teach` |
 | Context ending / switch agent | `/handoff` → `handoff` |
 | About to say done | `verify` → `ship` (uses `pr`) |
+| Audience should receive the build | `/release` → `release` (may use `wizard`) |
 | Authoring skills/rules | `writing-for-agents` |
 | Session ended; improve harness | `retro` |
 | Audit trail row | `run-log` |
@@ -37,13 +38,14 @@ Read this first. Prefer a **Cursor slash** (`/feature`, `/greenfield`, `/bug`, `
 
 1. **No production code before discover/grill + lock-scope** — unless user types `skip grill: …` (written waiver) or it is a one-line typo fix.
 2. **No silent assumptions** — research needs a **Q&A log** or **Waiver** section.
-3. **No “fixed/done” without verify evidence** (commands run, exit codes shown).
-4. **One vertical slice at a time**; tidy only when green (`tidy-refactor`).
-5. **Update `GLOSSARY.md`** when a domain term is coined or challenged (`domain-modeling`).
-6. **Artifacts under `artifacts/`** — commit `*.md` there; hand off with `handoff`.
-7. **Log the slash + skill** in `artifacts/reviews/<slug>-run-log.md` (`run-log`).
-8. **Parallel agents only in isolated worktrees**.
-9. **Authorized targets only** for `evidence-research`.
+3. **No “fixed/done” without verify evidence** (commands run, exit codes shown, acceptance evidence filled).
+4. **Ship is git. Release is the audience.** Do not call a commit a release.
+5. **One vertical slice at a time**; tidy only when green (`tidy-refactor`).
+6. **Update `GLOSSARY.md`** when a domain term is coined or challenged (`domain-modeling`).
+7. **Artifacts under `artifacts/`** — commit `*.md` there; hand off with `handoff`.
+8. **Log the slash + skill** in `artifacts/reviews/<slug>-run-log.md` (`run-log`).
+9. **Parallel agents only in isolated worktrees**. After a merge, integration verify.
+10. **Authorized targets only** for `evidence-research`.
 
 ## Artifact map
 
@@ -59,6 +61,7 @@ Read this first. Prefer a **Cursor slash** (`/feature`, `/greenfield`, `/bug`, `
 | Review | `artifacts/reviews/<slug>.md` |
 | Run log | `artifacts/reviews/<slug>-run-log.md` |
 | Verify | `artifacts/reviews/<slug>-verify.md` |
+| Release | `artifacts/reviews/<slug>-release.md` |
 | Handoff | `artifacts/handoffs/<slug>.md` |
 | Questionnaire | `artifacts/research/<slug>-questionnaire.md` |
 | Teach | `artifacts/teach/<topic-slug>/` |
@@ -93,7 +96,8 @@ Read this first. Prefer a **Cursor slash** (`/feature`, `/greenfield`, `/bug`, `
 | `teach` | Multi-session teaching |
 | `wait-what` | Re-pitch confusion |
 | `handoff` | Compact for next agent |
-| `ship` | Commit/PR after verify |
+| `ship` | Commit/PR after verify. Does not release |
+| `release` | Audience delivery after verify |
 | `retro` | Improve harness |
 | `writing-for-agents` | Author skills/rules well |
 
@@ -114,7 +118,7 @@ Read this first. Prefer a **Cursor slash** (`/feature`, `/greenfield`, `/bug`, `
 | `verify` | Run checks + evidence |
 | `pr` | PR body shape |
 
-**Invocation rule:** User-invoked may call model-invoked. User-invoked must **not** call other user-invoked unless this router says so (e.g. `implement-spec` → `implement` / `parallel-worktrees`; `discover` → `grilling` / `domain-modeling` / `run-log`; `ship` → `pr`).
+**Invocation rule:** User-invoked may call model-invoked. User-invoked must **not** call other user-invoked unless this router says so (e.g. `implement-spec` → `implement` / `parallel-worktrees`; `discover` → `grilling` / `domain-modeling` / `run-log`; `ship` → `pr`; `release` → `wizard`).
 
 ## Default feature pipeline
 
@@ -122,12 +126,12 @@ Read this first. Prefer a **Cursor slash** (`/feature`, `/greenfield`, `/bug`, `
 /feature or /greenfield
  → discover (grill + run-log) → lock-scope → write-plan → risk-assess → to-tickets
  → implement | implement-spec   (+ tdd, tidy-refactor)
- → dual-review → verify → ship → retro
+ → dual-review → verify → ship → release → retro
 ```
 
 ## Parallel agents (Orca-lite)
 
-Use `parallel-worktrees` when tickets are independent or you want a race. Human merges the winner.
+Use `parallel-worktrees` when tickets are independent or you want a race. Human merges the winner, then integration verify.
 
 ## REA / reverse engineering
 

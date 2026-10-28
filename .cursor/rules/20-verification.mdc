@@ -11,4 +11,4 @@ Before saying work is complete, fixed, or passing:
 2. Show exit codes and key output (or paths to log files).
 3. If checks fail, fix or document a waiver — do not redefine “done”.
 
-Preferred skill: `verify`, then `ship` for commit/PR.
+Preferred skill: `verify` (acceptance evidence required), then `ship` for commit/PR. `release` is a separate gate when an audience should receive the build.

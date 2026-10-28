@@ -19,6 +19,11 @@ Shared language for humans and agents. Prefer these terms in code, tickets, and 
 | **Standards review** | Diff vs coding standards / smells | “LGTM” |
 | **Spec review** | Diff vs originating Spec/tickets | style-only review |
 | **Evidence** | Command output / test result proving a claim | “should work” |
+| **Acceptance evidence** | Each acceptance criterion mapped to a command, exit code, or named waiver | a green suite with no link to the spec |
+| **Ship** | Commit and/or open a pull request after verify. Code is in git | “users have it” |
+| **Release** | Make a verified change available to its audience, with rollback named | calling a commit a release |
+| **Sensitive surface** | Auth, PII, payment, upload, multi-tenant isolation, or a public API contract | “we’ll security-review later” with no note |
+| **Integration verify** | Verify run on the merged integration tree | a green worktree that was never merged |
 | **Worktree race** | Parallel agents, isolated checkouts, pick winner | shared dirty tree |
 | **Handoff** | Compact artifact for the next agent/session | “continue somehow” |
 | **Run log** | Append-only audit of slash + skill + outcome | invisible freestyle chat |

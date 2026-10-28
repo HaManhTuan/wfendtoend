@@ -17,6 +17,7 @@ Canonical paths (create dirs if missing):
 | Review | `artifacts/reviews/<slug>.md` |
 | Run log | `artifacts/reviews/<slug>-run-log.md` |
 | Verify | `artifacts/reviews/<slug>-verify.md` |
+| Release | `artifacts/reviews/<slug>-release.md` |
 | Handoff | `artifacts/handoffs/<slug>.md` |
 | Teach | `artifacts/teach/<topic-slug>/` |
 | ADR | `docs/adr/NNNN-title.md` |

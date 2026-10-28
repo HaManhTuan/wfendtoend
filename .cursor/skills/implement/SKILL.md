@@ -42,9 +42,10 @@ Independent ready tickets → optional `parallel-worktrees` (one role/ticket per
 ## Close-out
 
 1. Run **`dual-review`** (Standards ‖ Spec).
-2. Run **`verify`**.
-3. Only then **`ship`** (commit/PR) if the user asked.
-4. Append run-log outcomes for review / verify / ship.
+2. Run **`verify`** (on the integration tree if worktrees were merged).
+3. Only then **`ship`** (commit/PR) if the user asked. Ship does not release.
+4. **`release`** only when the user wants an audience beyond the branch.
+5. Append run-log outcomes for review / verify / ship / release.
 
 ## Do not
 

@@ -12,6 +12,7 @@ Improve the **agent environment**, not only the product code.
 
 ## Collect
 
+- Did the SPEC **success** metric move? Write yes, no, or not measured. Do this before harness nits.
 - Where did the agent guess wrong?
 - Missing tests/scripts that would have caught issues earlier?
 - Ambiguous glossary terms?

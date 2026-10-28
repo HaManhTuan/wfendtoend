@@ -33,3 +33,4 @@ Review the diff since a fixed point (ticket start commit, branch base, or `main`
 
 - Rubber-stamp “LGTM” without reading the Spec.
 - Expand into unrelated refactors during review fixes unless user asks.
+- Treat the security-hygiene bullet as an audit. Sensitive surfaces are gated in `verify` and `release`.
