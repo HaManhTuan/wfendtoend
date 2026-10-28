@@ -41,6 +41,11 @@ Options:
   --symlink        Prefer symlinks into the kit when creating new skills/rules/commands
   -h, --help       Show this help
 
+Also links Claude Code (terminal) at .claude/skills and .claude/commands to the
+same .cursor files, and adds CLAUDE.md importing AGENTS.md when the root file
+is absent. An existing CLAUDE.md is kept; the import is placed at
+.claude/CLAUDE.md instead.
+
 Examples:
   $(basename "$0") ~/code/my-app
   $(basename "$0") ~/code/my-app --dry-run
@@ -261,6 +266,20 @@ while IFS= read -r -d '' src; do
   place_file "$src" "$TARGET/.cursor/commands/$base" 1
 done < <(find "$KIT_ROOT/.cursor/commands" -maxdepth 1 -type f -print0 | sort -z)
 
+if [[ "$DRY_RUN" -eq 1 ]]; then
+  echo "  note    .claude/skills + .claude/commands  (symlinks to .cursor after a real install)"
+else
+  CLAUDE_ARGS=("$TARGET")
+  [[ "$FORCE" -eq 1 ]] && CLAUDE_ARGS+=(--force)
+  "$KIT_ROOT/scripts/link-claude.sh" "${CLAUDE_ARGS[@]}"
+fi
+
+if [[ -f "$TARGET/CLAUDE.md" ]]; then
+  place_file "$KIT_ROOT/CLAUDE.md" "$TARGET/.claude/CLAUDE.md" 0
+else
+  place_file "$KIT_ROOT/CLAUDE.md" "$TARGET/CLAUDE.md" 0
+fi
+
 if [[ "$MODE" == "full" ]]; then
   ensure_dir "$TARGET/docs/agents"
 
@@ -448,6 +467,7 @@ if [[ "$DRY_RUN" -eq 1 ]]; then
   echo "Dry-run complete — no files written."
 else
   echo "Done. Manifest: .cursor/wfendtoend-manifest.json"
-  echo "Open the app in Cursor → type /greenfield or /feature (agent will grill first)."
+  echo "Cursor: open the app and type /greenfield or /feature."
+  echo "Claude Code terminal: cd the app and run claude, then /feature or /greenfield."
 fi
 echo

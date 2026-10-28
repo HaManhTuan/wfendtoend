@@ -153,6 +153,26 @@ Commit giúp với message rõ ràng. Đừng push.
 
 ---
 
+## Claude Code (terminal)
+
+Cùng một router. `CLAUDE.md` import `AGENTS.md` và các rule. Skill và slash là symlink sang `.cursor/`, không có bản thứ hai.
+
+```bash
+cd /path/to/app
+claude
+```
+
+Trong phiên:
+
+```text
+/feature
+/greenfield
+/bug
+/release
+```
+
+`/release`, `/teach`, `/handoff`, `/wayfinder`, `/prototype`, `/triage` lấy từ skill cùng tên. Installer tạo symlink này. Repo đã cài kit cũ: chạy lại `install-to-project.sh`.
+
 ## Cheat sheet — Cursor slash
 
 | Gõ trong Cursor | Khi nào |

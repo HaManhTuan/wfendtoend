@@ -54,4 +54,4 @@ npx skills add anthropics/skills --skill frontend-design
 
 ## Done when
 
-User can type **`/feature`** or **`/greenfield`** and the agent finds skills + will grill before coding. **`ship`** is git. **`/release`** is how an audience receives the build.
+User can type **`/feature`** or **`/greenfield`** in Cursor, or the same slash in Claude Code in that directory. The agent grills before coding. **`ship`** is git. **`/release`** is how an audience receives the build. Claude Code reads `CLAUDE.md`, which imports `AGENTS.md`.

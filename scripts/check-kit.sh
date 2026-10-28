@@ -54,6 +54,21 @@ need .cursor/skills/verify/SKILL.md "regression check"
 need .cursor/skills/implement/SKILL.md "Amendments"
 need templates/SPEC.md "Amendments"
 need templates/SPEC.md "one-seam"
+need CLAUDE.md "@AGENTS.md"
+need CLAUDE.md "@.cursor/rules/00-workflow.mdc"
+
+if [[ ! -L "$ROOT/.claude/skills/discover" ]]; then
+  echo "MISSING symlink .claude/skills/discover" >&2
+  fail=1
+fi
+if [[ ! -L "$ROOT/.claude/commands/feature.md" ]]; then
+  echo "MISSING symlink .claude/commands/feature.md" >&2
+  fail=1
+fi
+if [[ -e "$ROOT/.claude/commands/release.md" ]]; then
+  echo "UNEXPECTED .claude/commands/release.md (skill owns /release)" >&2
+  fail=1
+fi
 
 if [[ "$fail" -ne 0 ]]; then
   exit 1
