@@ -19,7 +19,7 @@ description: >-
 5. Write `artifacts/reviews/<slug>-verify.md` from `templates/VERIFY.md`:
    - command, exit code, key excerpt
    - commit SHA (`git rev-parse HEAD`)
-   - **Acceptance evidence:** one row per acceptance criterion or ticket **Done when**. If the spec has none, one row saying so.
+   - **Acceptance evidence:** one row per acceptance criterion or ticket **Done when**. A bug with no SPEC uses the **regression check** named in `artifacts/research/<slug>-bug.md` as that single row. If the spec has none and this is not a bug, one row saying so.
    - **Sensitive surface:** `none`, or a threat-note path, a security-audit report path, or a named waiver. Auth, PII, payment, upload, multi-tenant, and public API are sensitive.
    - **CI:** if a workflow file exists, cite a green run or write “local pre-check only.” If no workflow exists, write `absent`. Never claim CI passed from a local exit code.
 

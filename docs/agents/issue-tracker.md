@@ -14,8 +14,11 @@ Filled by `setup-project`. Skills that create tickets read this file.
 
 ### GitHub
 
-- Use `gh issue create` / project boards as agreed
-- Labels:
+Filled when this project mirrors tickets to GitHub. `publish-tickets` reads these fields. Leave them blank to keep markdown only.
+
+- **Repo:** auto | `owner/name`
+- **Sub-issues:** yes | no
+- **Labels:** `<kind or ticket label the repo already has>`
 
 ### GitLab
 

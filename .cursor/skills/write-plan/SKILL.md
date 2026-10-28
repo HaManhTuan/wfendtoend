@@ -8,7 +8,7 @@ disable-model-invocation: true
 
 # Write plan
 
-Read SPEC + scope (+ research). Write `artifacts/plans/<slug>.md` from `templates/PLAN.md`.
+Read SPEC + scope (+ research). Write `artifacts/plans/<slug>.md` from `templates/PLAN.md`. Fill every section, including the Risks table. Delete the EXAMPLE step.
 
 ## Required sections
 

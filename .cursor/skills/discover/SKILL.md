@@ -52,8 +52,10 @@ Cover until each branch is decided or explicitly deferred:
 
 ## Outputs (required)
 
-1. `artifacts/research/<slug>.md` — must include **Q&A log** _or_ **Waiver**
+1. `artifacts/research/<slug>.md` from `templates/RESEARCH.md` (mode `discover`) — must include **Q&A log** _or_ **Waiver**
 2. `artifacts/specs/<slug>.md` — from `templates/SPEC.md`
+   - **One seam** (one route, one rule, one behavior): set **Profile** to `one-seam`. Fill Problem, one FR row, Sensitive surface, Verification approach, and Approval. Every other section is one line: `n/a — one seam`.
+   - **Full** profile for a product, epic, or anything with more than one seam.
 3. Run-log entries for discover start + SPEC ready
 
 Only after open questions are resolved (or waived), ask the user to approve the SPEC, then point them to `lock-scope`.

@@ -82,7 +82,7 @@ Read this first. Prefer a **Cursor slash** (`/feature`, `/greenfield`, `/bug`, `
 | `to-spec` | Synthesize chat → SPEC (no new interview) |
 | `lock-scope` | In/out + assumptions |
 | `write-plan` | Implementation plan |
-| `to-tickets` | Ticket graph |
+| `to-tickets` | Ticket graph. May call `publish-tickets` |
 | `implement` | Build one/few tickets |
 | `implement-spec` | Whole SPEC via frontier |
 | `parallel-worktrees` | Orca-lite isolation |
@@ -117,8 +117,9 @@ Read this first. Prefer a **Cursor slash** (`/feature`, `/greenfield`, `/bug`, `
 | `dual-review` | Standards ‖ Spec |
 | `verify` | Run checks + evidence |
 | `pr` | PR body shape |
+| `publish-tickets` | Mirror approved tickets to GitHub. Markdown stays canonical |
 
-**Invocation rule:** User-invoked may call model-invoked. User-invoked must **not** call other user-invoked unless this router says so (e.g. `implement-spec` → `implement` / `parallel-worktrees`; `discover` → `grilling` / `domain-modeling` / `run-log`; `ship` → `pr`; `release` → `wizard`).
+**Invocation rule:** User-invoked may call model-invoked. User-invoked must **not** call other user-invoked unless this router says so (e.g. `implement-spec` → `implement` / `parallel-worktrees`; `discover` → `grilling` / `domain-modeling` / `run-log`; `ship` → `pr`; `release` → `wizard`; `to-tickets` → `publish-tickets`).
 
 ## Default feature pipeline
 

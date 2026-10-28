@@ -19,4 +19,4 @@ disable-model-invocation: true
 
 - Do not interview the subject matter in place of the stakeholder.
 - Prefer multiple choice + short free-text over essays.
-- After answers return → fold into `discover` / `lock-scope`.
+- After answers return → fill the template’s **Fold-back** table, then update `discover` / `lock-scope`.

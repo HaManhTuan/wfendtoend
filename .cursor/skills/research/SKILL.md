@@ -12,12 +12,7 @@ description: >-
 1. Clarify the question in one sentence.
 2. Prefer primary sources: official docs, RFCs, source code, standards.
 3. Prefer recent versions; note dates.
-4. Write `artifacts/research/<slug>-research.md`:
-   - Question
-   - Sources (links + what was taken)
-   - Findings
-   - Recommendations
-   - Open unknowns
+4. Write `artifacts/research/<slug>-research.md` from `templates/RESEARCH.md` with **Mode:** `cited`. Fill Sources, Cited findings, recommendation, and open unknowns. Every non-obvious claim keeps its source row.
 5. Do not implement product code here unless asked to spike.
 
 ## Quality

@@ -33,4 +33,7 @@ Each ticket:
 
 ## Optional publish
 
-If `docs/agents/issue-tracker.md` exists, follow it to create GitHub/GitLab/local issues. Otherwise keep the markdown file as source of truth.
+The markdown file is always the source of truth.
+
+- Type `github` in `docs/agents/issue-tracker.md` → invoke `publish-tickets`.
+- Any other type, or a missing tracker file → stop. Do not create remote issues.

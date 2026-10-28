@@ -15,9 +15,10 @@ Huge work fails when you pretend it fits in one PLAN. Navigate with a **decision
 1. State the destination (one paragraph).
 2. List unknown decisions blocking the path (architecture, vendor, data model, rollout…).
 3. Write `artifacts/plans/<slug>-wayfinder.md` (see `templates/WAYFINDER.md`):
-   - Decision tickets D1…Dn
+   - Decision tickets D1…Dn, each marked one-way or two-way
    - Dependencies between decisions
    - Suggested order
+   - Delete nothing the template marks required; leave parking lot as `none` if empty
 4. Resolve **one** decision per session (use `grill-me` / `grilling` / `prototype` / `research` as needed).
 5. Update the map; spawn normal feature tickets only for the **cleared** stretch of road.
 

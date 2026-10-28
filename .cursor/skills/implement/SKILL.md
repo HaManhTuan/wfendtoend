@@ -32,7 +32,7 @@ For each ready ticket (or plan step):
 3. Keep the diff scoped to that slice; use `codebase-design` at seams.
 4. When green, optional **`tidy-refactor`** before the next ticket.
 5. Mark the ticket checkbox done in the tickets file.
-6. If blockers appear, update the graph; do not silently expand scope.
+6. If the slice needs work outside the approved SPEC, stop. Append a row to the SPEC **Amendments** table and wait for approval. Do not silently expand scope.
 7. Multi-ticket SPEC → prefer **`implement-spec`**.
 
 ## Concurrency

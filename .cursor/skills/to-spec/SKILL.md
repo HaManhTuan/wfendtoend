@@ -20,6 +20,6 @@ disable-model-invocation: true
 ## Steps
 
 1. Read chat + any research notes.
-2. Write `artifacts/specs/<slug>.md` from `templates/SPEC.md`.
+2. Write `artifacts/specs/<slug>.md` from `templates/SPEC.md`. One seam uses profile `one-seam` (Problem, one FR, Sensitive surface, Verification, Approval; other sections `n/a — one seam`).
 3. Mark assumptions explicitly; do not invent requirements.
 4. Ask for approval → then `lock-scope`.

@@ -35,3 +35,5 @@ description: >-
 ## Output
 
 Append findings to `artifacts/research/<slug>-bug.md` (repro, root cause, fix, verification).
+
+Name one **regression check** (the command and the assertion). That check is the acceptance row for `verify`. Do not invent an FR table for a bug.

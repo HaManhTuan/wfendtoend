@@ -26,18 +26,7 @@ Refuse illegal/unauthorized cracking, credential theft, or exploit development.
 
 ## Output
 
-Write `artifacts/research/<slug>-evidence.md`:
-
-```markdown
-# Evidence: <question>
-## Target
-## Authorization
-## Method & tools
-## Findings (with evidence)
-## Unknowns
-## Suggested rebuild approach
-## Feed into SPEC
-```
+Write `artifacts/research/<slug>-evidence.md` from `templates/RESEARCH.md` with **Mode:** `evidence`. Fill Authorization, method, findings with pointers, unknowns, limits, and Feed into SPEC.
 
 ## Next
 
